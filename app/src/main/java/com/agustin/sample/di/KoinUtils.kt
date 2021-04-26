@@ -38,7 +38,7 @@ private fun networkModule() = module {
 
 private fun repositoryModule() = module {
     single<DispatcherProvider> { DispatcherProviderImpl() }
-    single { MainRepository()}
+    single { MainRepository(get(), get())}
 }
 
 private fun viewModelsModule() = module {

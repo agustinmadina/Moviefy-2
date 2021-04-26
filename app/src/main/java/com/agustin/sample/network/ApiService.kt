@@ -1,11 +1,15 @@
 package com.agustin.sample.network
 
-import com.agustin.sample.network.models.ApiMessage
+import com.agustin.sample.network.models.ApiResponse
+import com.agustin.sample.network.models.Movie
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface ApiService {
 
-    @GET("9b58f48a-048a-4676-a888-ffbeb5e7b762")
-    suspend fun getMessages(): List<ApiMessage>
+    @GET("movie/top_rated")
+    suspend fun getTopRatedMovies(
+        @Query("api_key") apiKey: String? = null
+    ): ApiResponse
 
 }

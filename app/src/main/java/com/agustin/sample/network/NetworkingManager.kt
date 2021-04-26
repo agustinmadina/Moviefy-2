@@ -34,7 +34,7 @@ class NetworkingManager(
         const val HEADER_CACHE_CONTROL = "Cache-Control"
         const val HEADER_PRAGMA = "Pragma"
 
-        const val HEADER_AUTH = "auth-header"
+        const val HEADER_AUTH = "Authorization"
         const val HEADER_BEARER = "Bearer "
     }
 
@@ -137,7 +137,7 @@ class NetworkingManager(
         return Interceptor { chain ->
             runBlocking {
                 val request = chain.request()
-                val accessToken = ""
+                val accessToken = BuildConfig.READ_ACCESS_TOKEN
                 val newRequest = if (!accessToken.isNullOrEmpty()) {
                     request.newBuilder()
                         .addHeader(HEADER_AUTH, HEADER_BEARER + accessToken)
