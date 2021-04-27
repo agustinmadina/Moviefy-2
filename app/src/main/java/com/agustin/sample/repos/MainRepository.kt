@@ -16,6 +16,11 @@ class MainRepository(
             api.getTopRatedMovies().movies
         }
 
+    suspend fun searchMovie(keyword: String): List<Movie> =
+        withContext(dispatcher.io()) {
+            api.searchMovie(keyword).movies
+        }
+
     suspend fun getMovieDetails(movieId: Int): MovieDetail =
         withContext(dispatcher.io()) {
             api.getMovieDetail(movieId)

@@ -6,6 +6,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.NavigationUI.navigateUp
 import androidx.navigation.ui.navigateUp
 import com.agustin.sample.R
 import com.agustin.sample.databinding.ActivityMainBinding
@@ -22,6 +23,11 @@ class MainActivity : AppCompatActivity() {
         setupActionBar()
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed() // to trigger OnBackPressedCallbacks in your fragments
+        return navigateUp()
+    }
+
     private fun setupActionBar() {
         setSupportActionBar(binding.toolbar)
         navController =
@@ -29,4 +35,7 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)
     }
+
+    private fun navigateUp() =
+        navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
 }

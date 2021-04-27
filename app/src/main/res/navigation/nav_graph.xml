@@ -22,6 +22,7 @@
     <fragment
         android:id="@+id/movieDetailFragment"
         android:name="com.agustin.sample.ui.MovieDetailFragment"
+        android:label="Label detail"
         tools:layout="@layout/fragment_movie_details">
 
         <argument

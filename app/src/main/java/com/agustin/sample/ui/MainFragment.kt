@@ -31,6 +31,10 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         setupRecyclerView()
         setupObservers()
         movieViewModel.getTopRatedMovies()
+
+        binding.searchIcon.setOnClickListener {
+            movieViewModel.searchMovie(binding.searchEditText.text.toString())
+        }
     }
 
     private fun setupRecyclerView() {
@@ -64,6 +68,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
         movieViewModel.movies.observe(viewLifecycleOwner) { movies ->
            moviesAdapter.submitList(movies)
+            moviesAdapter.notifyDataSetChanged()
         }
     }
 }

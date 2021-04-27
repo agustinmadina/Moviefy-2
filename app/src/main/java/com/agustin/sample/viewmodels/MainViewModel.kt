@@ -50,6 +50,19 @@ class MainViewModel(
             }
         }
     }
+
+    fun searchMovie(keyword: String) {
+        _moviesState.value = MovieState.Loading
+        viewModelScope.launch {
+            try {
+                _movies.value = mainRepo.searchMovie(keyword)
+                _moviesState.value = MovieState.Success
+            } catch (e: Throwable) {
+                _moviesState.value = MovieState.Error(e)
+                Timber.e(e, ERROR_GET_MOVIES)
+            }
+        }
+    }
 }
 
 sealed class MovieState {
