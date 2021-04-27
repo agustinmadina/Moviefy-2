@@ -1,9 +1,12 @@
 package com.agustin.sample.network.models
 
+import android.os.Parcelable
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import kotlinx.android.parcel.Parcelize
 
 @JsonClass(generateAdapter = true)
+@Parcelize
 data class Movie(
     val adult: Boolean,
 
@@ -38,4 +41,4 @@ data class Movie(
 
     @Json(name = "vote_count")
     val voteCount: Long
-)
+): Parcelable

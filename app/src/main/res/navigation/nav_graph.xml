@@ -10,6 +10,23 @@
         android:name="com.agustin.sample.ui.MainFragment"
         android:label="@string/title_main_fragment"
         tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/showMovieDetail"
+            app:destination="@id/movieDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/movieDetailFragment"
+        android:name="com.agustin.sample.ui.MovieDetailFragment"
+        tools:layout="@layout/fragment_movie_details">
+
+        <argument
+            android:name="movie"
+            app:argType="com.agustin.sample.network.models.Movie" />
     </fragment>
 
 </navigation>
