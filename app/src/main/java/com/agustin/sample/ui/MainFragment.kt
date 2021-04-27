@@ -2,6 +2,8 @@ package com.agustin.sample.ui
 
 import android.os.Bundle
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,7 +22,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 /**
  * Created by Agustin Madina on 23/04/2021.
  */
-class MainFragment : Fragment(R.layout.fragment_main) {
+class MainFragment : Fragment(R.layout.fragment_main), AdapterView.OnItemSelectedListener {
     private val movieViewModel: MainViewModel by viewModel()
     private val binding by viewBinding(FragmentMainBinding::bind)
 
@@ -28,6 +30,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupCategoriesSpinner()
         setupRecyclerView()
         setupObservers()
         movieViewModel.getTopRatedMovies()
@@ -35,6 +38,18 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         binding.searchIcon.setOnClickListener {
             movieViewModel.searchMovie(binding.searchEditText.text.toString())
         }
+    }
+
+    private fun setupCategoriesSpinner() {
+        ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.movie_categories_array,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinner.adapter = adapter
+        }
+        binding.spinner.onItemSelectedListener = this
     }
 
     private fun setupRecyclerView() {
@@ -67,8 +82,15 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         }
 
         movieViewModel.movies.observe(viewLifecycleOwner) { movies ->
-           moviesAdapter.submitList(movies)
+            moviesAdapter.submitList(movies)
             moviesAdapter.notifyDataSetChanged()
         }
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        movieViewModel.loadCategory(position)
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
     }
 }

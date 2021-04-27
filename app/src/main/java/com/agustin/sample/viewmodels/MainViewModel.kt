@@ -63,6 +63,23 @@ class MainViewModel(
             }
         }
     }
+
+    fun loadCategory(position: Int) {
+        _moviesState.value = MovieState.Loading
+        viewModelScope.launch {
+            try {
+                when (position) {
+                    0 ->  _movies.value = mainRepo.getTopRatedMovies()
+                    1 ->  _movies.value = mainRepo.getPopularMovies()
+                    2 ->  _movies.value = mainRepo.getUpcomingMovies()
+                }
+                _moviesState.value = MovieState.Success
+            } catch (e: Throwable) {
+                _moviesState.value = MovieState.Error(e)
+                Timber.e(e, ERROR_GET_MOVIES)
+            }
+        }
+    }
 }
 
 sealed class MovieState {

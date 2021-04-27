@@ -16,6 +16,16 @@ class MainRepository(
             api.getTopRatedMovies().movies
         }
 
+    suspend fun getPopularMovies(): List<Movie> =
+        withContext(dispatcher.io()) {
+            api.getPopularMovies().movies
+        }
+
+    suspend fun getUpcomingMovies(): List<Movie> =
+        withContext(dispatcher.io()) {
+            api.getUpcomingMovies().movies
+        }
+
     suspend fun searchMovie(keyword: String): List<Movie> =
         withContext(dispatcher.io()) {
             api.searchMovie(keyword).movies
